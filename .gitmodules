@@ -1,0 +1,3 @@
+[submodule "include/crs_common"]
+	path = include/crs_common
+	url = https://github.com/Cyclone-Robosub/crs_common.git
