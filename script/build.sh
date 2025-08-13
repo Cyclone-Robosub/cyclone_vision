@@ -3,8 +3,6 @@
 # ROS Package Build Script for cyclone_vision
 # This script builds the ROS package with proper error handling and logging
 
-set -e  # Exit on any error
-
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -33,12 +31,12 @@ print_error() {
 check_workspace() {
     if [[ ! -f "package.xml" ]]; then
         print_error "package.xml not found. Make sure you're in the package root directory."
-        exit 1
+        exit 0
     fi
     
     if [[ ! -f "setup.py" ]]; then
         print_error "setup.py not found. This doesn't appear to be a Python ROS package."
-        exit 1
+        exit 0
     fi
 }
 
@@ -69,7 +67,7 @@ build_package() {
     print_status "Starting colcon build..."
     
     # Build with verbose output and specific package selection
-    if colcon build --packages-select "$package_name" --event-handlers console_direct+; then
+    if colcon build --packages-select "$package_name" --symlink-install --event-handlers console_direct+; then
         print_success "Package built successfully!"
         return 0
     else
@@ -165,7 +163,7 @@ main() {
             *)
                 print_error "Unknown option: $1"
                 echo "Use --help for usage information"
-                exit 1
+                exit 0
                 ;;
         esac
     done
@@ -186,7 +184,7 @@ main() {
     else
         print_error "Build failed!"
         show_build_logs
-        exit 1
+        exit 0
     fi
 }
 

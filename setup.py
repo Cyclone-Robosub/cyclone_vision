@@ -18,8 +18,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'CamaraSubscriber = cyclone_vision.InvokeCamara:main',
-            'BottomCamDetection = cyclone_vision.ObjectDetection:main'
+            'InvokeCamara = cyclone_vision.InvokeCamara:main',
+            'ObjectDetection = cyclone_vision.ObjectDetectionNode:main'
         ],
     },
 )

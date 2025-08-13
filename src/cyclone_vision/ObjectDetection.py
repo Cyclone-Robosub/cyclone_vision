@@ -3,7 +3,7 @@ from rclpy.node import Node
 from std_msgs.msg import String
 import cv2
 
-from downward_facing_camera import ObjectDetector
+from .ObjectDetector import ObjectDetector
 
 class ObjectDetectionNode(Node):
     def __init__(self):

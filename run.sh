@@ -19,8 +19,8 @@ WORKSPACE_ROOT="$(pwd)"
 # Available nodes (update these based on your actual entry points)
 declare -A AVAILABLE_NODES
 AVAILABLE_NODES=(
-    ["camera"]="CamaraSubscriber"
-    ["detection"]="BottomCamDetection"
+    ["camera"]="InvokeCamera"
+    ["detection"]="Objectdetection"
 )
 
 # Function to print colored output
@@ -65,11 +65,11 @@ source_workspace() {
     print_status "Sourcing ROS workspace..."
     
     # Source ROS2 if available
-    if [[ -f "/opt/ros/humble/setup.bash" ]]; then
-        source /opt/ros/humble/setup.bash
+    if [[ -f "/opt/ros/jazzy/setup.bash" ]]; then
+        source /opt/ros/jazzy/setup.bash
         print_status "Sourced ROS2 Humble"
-    elif [[ -f "/opt/ros/foxy/setup.bash" ]]; then
-        source /opt/ros/foxy/setup.bash
+    elif [[ -f "/opt/ros/tilted/setup.bash" ]]; then
+        source /opt/ros/tilted/setup.bash
         print_status "Sourced ROS2 Foxy"
     else
         print_warning "ROS2 installation not found in standard locations"
@@ -134,11 +134,11 @@ launch_all() {
     
     # Launch camera subscriber
     if command -v gnome-terminal >/dev/null 2>&1; then
-        gnome-terminal -- bash -c "source install/setup.bash; ros2 run $PACKAGE_NAME CamaraSubscriber; exec bash"
+        gnome-terminal -- bash -c "source install/setup.bash; ros2 run $PACKAGE_NAME cameraSubscriber; exec bash"
         sleep 2
         gnome-terminal -- bash -c "source install/setup.bash; ros2 run $PACKAGE_NAME BottomCamDetection; exec bash"
     elif command -v xterm >/dev/null 2>&1; then
-        xterm -e "source install/setup.bash; ros2 run $PACKAGE_NAME CamaraSubscriber" &
+        xterm -e "source install/setup.bash; ros2 run $PACKAGE_NAME cameraSubscriber" &
         sleep 2
         xterm -e "source install/setup.bash; ros2 run $PACKAGE_NAME BottomCamDetection" &
     else
@@ -186,8 +186,8 @@ show_help() {
     echo "  help                      Show this help message"
     echo ""
     echo "Examples:"
-    echo "  $0 run camera                    # Run camera subscriber node"
-    echo "  $0 run CamaraSubscriber         # Run node by full name"
+    echo "  $0 run camera                   # Run camera subscriber node"
+    echo "  $0 run InvokeCamera             # Run node by full name"
     echo "  $0 run detection --help         # Run detection node with --help"
     echo "  $0 list                         # List all available nodes"
     echo "  $0 launch                       # Launch all nodes"
